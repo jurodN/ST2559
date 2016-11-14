@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="types" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="time" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="director" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="actor" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -35,7 +36,8 @@ import javax.xml.bind.annotation.XmlType;
     "year",
     "types",
     "time",
-    "director"
+    "director",
+    "actor"
 })
 public class AddMovie {
 
@@ -44,6 +46,7 @@ public class AddMovie {
     protected String types;
     protected int time;
     protected String director;
+    protected String actor;
 
     /**
      * Gets the value of the title property.
@@ -155,6 +158,30 @@ public class AddMovie {
      */
     public void setDirector(String value) {
         this.director = value;
+    }
+
+    /**
+     * Gets the value of the actor property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getActor() {
+        return actor;
+    }
+
+    /**
+     * Sets the value of the actor property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setActor(String value) {
+        this.actor = value;
     }
 
 }

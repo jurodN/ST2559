@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="xsltMovie.xsl"?>
-<movies>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xsl" href="xsltMovie.xsl"?><movies>
 
     <film>
         <title>Paranormal Activity</title>
@@ -701,4 +699,4 @@
         <director>Joss Whedon</director>
     </film>
 
-</movies>
+<film><title>MisterB</title><year>2010</year><types><type>asdf</type><type>sedfs</type><type>sdf</type></types><time>100 min</time><director>scxs</director><actor>sssssss</actor></film><film><title>MisterB</title><year>2013</year><types><type>Action</type></types><time>300 min</time><director>jsp</director><actor>jk</actor></film></movies>

@@ -1,8 +1,28 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * เป็นไฟล์ภาษา java สำหรับเขียน control เพื่อเรียกข้อมูลจากเอกสาร xml
+ * โดยใช้ไลบารี่ avax.xml.parsers ต่างๆ
+ * บันทึกเอกสาร document เป็นไฟล์ xml โดยเรียกใช้ไลบารี่ javax.xml.transform
+ * ในฟังก์ชันต่างๆ เมื่อเรียกใช้ไลบารี่เกี่ยวกับ document ให้ใช้ throws Exception ด้วย
+ * เว็บเซอร์วิสชี้ชื่อ @WebService(serviceName = "mvWebService")
+ * เมทอดต่างๆในเว็บเซอร์วิส ที่มีใช้บริการมีดังนี้
+ *  **@WebMethod(operationName = "DeleteMovie")
+        - สำหรับ "ลบ" รายชื่อภาพยนตร์ หน้าเว็บที่เกี่ยวข้อง Delete.jsp
+ *  **@WebMethod(operationName = "addMovie")
+        - สำหรับ "เพิ่ม" รายการภาพยนตร์ หน้าเว็บที่เกี่ยวข้อง Add.jsp
+ *  **@WebMethod(operationName = "searchQue1")
+        - สำหรับ "เรียกดู" รายการภาพยนตร์ หน้าเว็บที่เกี่ยวข้อง Search.jsp
+        - มีการเรียกใช้หน้า fragment normalSearch.jsp และ QuerySearch.jsp 
+ *  **@WebMethod(operationName = "Edit")
+        - สำหรับ "แก้ไข" รายการภาพยนตร์ หน้าเว็บที่เกี่ยวข้อง Edit.jsp
+ *  **@WebMethod(operationName = "Save")
+        - หน้าเว็บแสดงรายการที่แก้ไข "หลังจากกดปุ่ม save" หน้าแก้ไข หน้าเว็บที่เกี่ยวข้อง Edit_.jsp
+ *  **@WebMethod(operationName = "searchQue2")
+        - สำหรับ "เรียกดู" รายการภาพยนตร์ หน้าเว็บที่เกี่ยวข้อง SearchQ.jsp
+        - มีการเรียกใช้หน้า fragment QuerySearch.jsp ที่เกี่ยวข้องโดยใช้คำสั่ง 
+        - <jsp:include page="/Fragments/QuerySearch.jsp> </jsp:include>
  */
+
+/***** ประกาศไลบารี่ต่างๆที่จำเป็นต้องใช้ *******/
 package serverpack;
 
 import javax.jws.WebService;
@@ -32,16 +52,13 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.dom.DOMSource; 
 import javax.xml.transform.stream.StreamResult;
-/**
- *
- * @author nuyuyii
- */
+
+
+/***** ประกาศเว็บเซอร์วิส *******/
 @WebService(serviceName = "mvWebService")
 public class mvWebService {
 
-    /**
-     * Web service operation 
-     */
+    /**** ฟังก์ชัน callXML ไม่ใช้ในที่นี้ ข้ามๆ  ****/
     public static NodeList callXML(int func) throws SAXException, IOException, ParserConfigurationException {  
         // call path xml file to parse document
         URL url = mvWebService.class.getResource("/serverpack/movies.xml");
@@ -73,9 +90,8 @@ public class mvWebService {
         }    
         return null;
     }
-    /**
-     * Web service operation
-     */
+
+    /**** เมทอดชื่อ serchbyID ไม่ใช้ในที่นี้ ข้ามๆ  ****/
     @WebMethod(operationName = "serchbyID")
     public String serchbyID(@WebParam(name = "nodeID") final int nodeID) throws Exception  {
         String result = "";
@@ -105,11 +121,15 @@ public class mvWebService {
         return result;
     }
 
-    /**
-     * Web service operation
-     */
+    /**** เมทอดชื่อ DeleteMovie
+    * เมื่อมีการเรียกใช้เมทอดนี้จะกระทำฟังก์ชัน DeleteMovie เป็นฟังก์ชันที่ส่งค่ากลับเป็น String 
+    * โดยฟังก์ชันนี้รับค่าพารามิเตอร์จากเว็บชื่อ nodeID 
+    * ประกาศเป็น integer ชื่อที่เรียกใช้ในฟังก์ชันเป็น nodeID
+    ****/
+
     @WebMethod(operationName = "DeleteMovie")
     public String DeleteMovie(@WebParam(name = "nodeID") final int nodeID) throws Exception  {
+        /** เพราะเป็นฟังก์ชันที่ส่งค่ากลับเป็น String จึงเริ่มที่ประกาศตัวแปรที่จะส่งค่ากลับ **/
         String result="";
         try {
             // call path xml file to parse document
@@ -117,22 +137,31 @@ public class mvWebService {
             String xmlFile = url.getPath();
             // File xmlFile = new File("movies.xml");
             // InputStream xmlFile = mvWebService.class.getResourceAsStream("/serverpack/movies.xml");
+            /** เรียกใช้ฟังก์ชันจากไลบารี่ เพื่อทำการเรียกเอกสาร xml ด้วย parse ภาษา java **/
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(xmlFile);
+
+            /** ให้ nList เก็บค่าตัวแปรชนิด NodeList (รายการ Node หลายๆโหนดเก็บเรียงเริ่มจาก 0 
+            ** โดยรับค่าจาก Elements ชื่อ "film" ในเอกสาร doc ซึ่งก็คือไฟเอกสาร xml ที่ถูก parser มา **/
             NodeList nList = doc.getElementsByTagName("film"); 
             
+            /** เก็บค่า String ในตัวแปรที่ชื่อ result **/
             result = "XML file delete successfully";
             Element nfilm = (Element) nList.item(nodeID-1);
             nfilm.getParentNode().removeChild(nfilm);
-            //Use a Transformer for output        
+            /** เรียกใช้ฟังก์ชัน SaveXML() เพื่อทำการบันทึกการเปลี่ยนแปลงลงในไฟล์เอกสาร xml 
+            ** ใส่ค่าพารามิเตอร์เป็น doc เพื่อให้บันทึกไฟล์เอกสาร doc **/
             SaveXML(doc);    
+            /** ส่งค่ากลับของฟังก์ชันเมื่อเข้าเงื่อนไข Try **/
             return result;
         } catch (Exception e) {
+            /** เก็บค่า String ที่แสดงผล Error ในตัวแปรที่ชื่อ result **/
             result = "Error Delete Movie! Selete NodeID again Pls.";
             e.printStackTrace();
 
         }
+        /** ส่งค่ากลับของฟังก์ชันเมื่อไม่เข้าเงื่อนไข Try **/
         return result;
     }
     
@@ -149,12 +178,20 @@ public class mvWebService {
         transformer.transform(source, result);
     }
 
-    /**
-     * Web service operation
-     */
+    /**** เมทอดชื่อ addMovie
+    * เมื่อมีการเรียกใช้เมทอดนี้จะกระทำฟังก์ชัน addMovie เป็นฟังก์ชันที่ส่งค่ากลับเป็น String 
+    * โดยฟังก์ชันนี้รับค่าพารามิเตอร์จากเว็บชื่อ
+    *  ** title ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น title
+    *  ** year ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น year
+    *  ** types ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น types
+    *  ** time ประกาศเป็น Integer ชื่อที่เรียกใช้ในฟังก์ชันเป็น time
+    *  ** director ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น director
+    *  **เพิ่มจากการทดสอบ
+    *  ** actor ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น actor
+    ****/
     @WebMethod(operationName = "addMovie")
     public String addMovie(@WebParam(name = "title") final String title, @WebParam(name = "year") final String year,@WebParam(name = "types") final String types,
-            @WebParam(name = "time") int time, @WebParam(name = "director") final String director) throws Exception{
+            @WebParam(name = "time") int time, @WebParam(name = "director") final String director, @WebParam(name = "actor") final String actor) throws Exception{
         String result="";
         try {
             // call path xml file to parse document
@@ -165,28 +202,52 @@ public class mvWebService {
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(xmlFile);
+
+            /** ให้ตัวแปร Element ชื่อ movie รับค่า Element จากไฟล์เอกสาร doc
+            ** ในที่นี้คือรับ Element ที่เป็น root element ของเอกสาร  **/
             Element movie = (Element) doc.getDocumentElement();
-            Element newfilm = doc.createElement("film");
-            // Tranform Time: interger to String
             String mins = time+" min";
-            // add Element to film
+
+            /** ประกาษตัวแปร Element ชื่อ newfilm ให้สร้าง Element ชื่อ film ในเอกสาร doc **/
+            Element newfilm = doc.createElement("film");
+
+            // Tranform Time: interger to String
+            String min = time + " min";
+            /** add Element to film 
+            ** โดยเรียกใช้ฟังก์ชัน getMovieElement(doc, name_element, value)
+            ** จากนั้นใช้ฟังก์ชัน appendChild() เพื่อเพิ่ม node element ย่อยนั้น ลงใน element <film> (newfilm)
+            ** กรณี types ประกาศสร้าง element ไว้ก่อน เพราะใน types จะมี child element 
+            **  * ที่ชื่อ type เก็บค่าแท็กประเภทต่างๆของภาพยนตร์อีกที
+            **/
             newfilm.appendChild(getMovieElement(doc, "title", title));
             newfilm.appendChild(getMovieElement(doc, "year", year));
             newfilm.appendChild(getMovieElement(doc, "types", ""));
-            newfilm.appendChild(getMovieElement(doc, "time", mins));
-            newfilm.appendChild(getMovieElement(doc, "director", director));
-            Element addtype = (Element) newfilm.getElementsByTagName("types").item(0);
-            // add element types movie
-            // int index = 1;
-            for (String type: types.split(",")){
-                String name = "type";//+index;
-                addtype.appendChild(getMovieElement(doc, name, type));
-                // index++;
-            }
-            NodeList nList = doc.getElementsByTagName("film");             
-            result = String.format("--%s--%s--%s--%s--%s--%s", title,year,types,mins,director,nList.getLength()+1);
+            newfilm.appendChild(getMovieElement(doc, "time", min));
+            newfilm.appendChild(getMovieElement(doc, "director",director));
+            newfilm.appendChild(getMovieElement(doc, "actor",actor));
 
-            // add element film to movie 
+            /** ประกาษตัวแปร Element ชื่อ addtype ให้รับค่า Element ชื่อ types ที่ตำแหน่งแรก
+            ** ใน element <film> (newfilm) **/
+            Element addtype = (Element) newfilm.getElementsByTagName("types").item(0);
+            /** add element types movie 
+            ** ใช้ for loop วนตัดค่าที่สตริงที่รับมาที่ตัวอักษร "," 
+            ** ประกาศตัวแปร name เก็บชื่อของ element ที่จะสร้างในที่นี้คือ type 
+            ** โดยเรียกใช้ฟังก์ชัน getMovieElement(doc, name_element, value)
+            ** จากนั้นใช้ฟังก์ชัน appendChild() เพื่อเพิ่ม node element 
+            ** ย่อยนั้น ลงใน element <types> (addtype)**/
+            for (String type: types.split(",")){
+                String name = "type";
+                addtype.appendChild(getMovieElement(doc, name, type));
+            }
+
+            /** เรียก element film ในเอกสาร doc เพื่อดูว่ามีภาพยนตร์ทั้งหมดกี่เรื่องแล้ว
+            ** โดยเรื่องที่เพิ่มเข้าไปจะเป็นเรื่องที่ตำแหน่งล่าสุด 
+            ** ดังนั้นจะต้องส่งกลับเป็น จำนวนภาพยนตร์ทั้งหมด +1 **/
+            NodeList nList = doc.getElementsByTagName("film");  
+            /** ส่งค่ากลับในรูปแบบของ format String โดย %s แทนสตริงของค่าตัวแปรหลัง , **/           
+            result = String.format("--%s--%s--%s--%s--%s--%s--%s", title,year,types,mins,director,actor,nList.getLength()+1);
+
+            /** ใช้ฟังก์ชัน appendChild() เพื่อเพิ่ม element <film> (newfilm) ลงใน root element (movie) **/
             movie.appendChild(newfilm);
             SaveXML(doc);    
             return result;
@@ -197,14 +258,30 @@ public class mvWebService {
         }
         return result;
     }
-    
+    /**** สร้างฟังก์ชันส่งค่ากลับเป็น Node สำหรับสร้าง element ชื่อ getMovieElement
+    * โดยฟังก์ชันนี้รับค่าพารามิเตอร์จากเว็บชื่อ
+    *  ** ประกาศตัวแปรชนิด Document ชื่อ doc
+    *  ** ประกาศตัวแปรชนิด String ชื่อ name
+    *  ** ประกาศตัวแปรชนิด String ชื่อ value
+    ****/
     private static Node getMovieElement(Document doc, String name, String value){
+	/** ประกาศ Element ชื่อ node ให้สร้าง Element เป็นชื่อที่รับมาจากตัวแปร name ในเอกสาร doc**/
         Element node = doc.createElement(name);
+	/** ใช้ฟังก์ชัน appendChild() เพื่อเพิ่มค่าของ element ลงใน  element <(name)> 
+        ** การเพิ่มค่าของ element ฟังก์ชัน createTextNode(value)
+        ** คือการใส่ค่าตัวแปร value ลงในโหนดของเอกสาร doc 
+        ** จากนั้นส่งค่าโหนดกลับ **/
         node.appendChild(doc.createTextNode(value));
         System.out.println("Insert OK "+node.getTextContent());
         return node;
     }
     
+    /**** เมทอดชื่อ searchQue1
+    * เมื่อมีการเรียกใช้เมทอดนี้จะกระทำฟังก์ชัน searchQue1 เป็นฟังก์ชันที่ส่งค่ากลับเป็น String 
+    * โดยฟังก์ชันนี้รับค่าพารามิเตอร์จากเว็บชื่อ
+    *  ** category ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น category
+    *  ** search ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น search
+    ****/
     @WebMethod(operationName = "searchQue1")
     public String searchQue1(@WebParam(name = "category") String category,@WebParam(name = "search") String search) throws Exception {
         String re="Selete Search Pls.";
@@ -219,19 +296,18 @@ public class mvWebService {
             Document doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("film"); 
+            /** วนลูปส่งค่ารายการภาพยนตร์ที่ตรงตามเงื่อนไขโดยจะส่งค่ากลับเป็นตาราง
+            ** มีรายละเอียดของภาพยนตร์**/
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 Element eElement = (Element) nNode;
                 Element nfilm =  (Element) nList.item(temp);
                 NodeList childfilm = nfilm.getChildNodes();
+           /** เงื่อนไขที่จะเก็บค่ารายการภาพยนตร์เพื่อจะส่งค่ากลับ
+           ** * ในที่นี้คือ กรณีรับค่าตัวแปร search เป็น all
+           ** * หรือ กรณีที่ชื่อ element (category) ของ film มีค่าตรงกับ ตัวแปร search 
+           ** category ต่างๆใน film เช่น title, year **/
                 if (search.equals("all")||eElement.getElementsByTagName(category).item(0).getTextContent().toLowerCase().contains(search.toLowerCase())) {
-                    /*re = re + "<br> NodeID: ::" + (temp+1)+"::";
-                    re = re + "<br> Title: " + eElement.getElementsByTagName("title").item(0).getTextContent();
-                    re = re + "<br> Year: " + eElement.getElementsByTagName("year").item(0).getTextContent();
-                    re = re + "<br> Types: " + eElement.getElementsByTagName("types").item(0).getTextContent();
-                    re = re + "<br> Time: " + eElement.getElementsByTagName("time").item(0).getTextContent();
-                    re = re + "<br> Director: " + eElement.getElementsByTagName("director").item(0).getTextContent();
-                    re = re + "<br> ---";*/
                     re = re + "<table><tr><td> NODEID:</td><td> ::" + (temp+1)+"::";
                     for (int j= 0; j < childfilm.getLength(); j++){
                         Node cnode = childfilm.item(j);
@@ -263,13 +339,18 @@ public class mvWebService {
             return re;
             
         } catch (Exception e) {   
-            re = "Selete Search Pls.";//Error Search Movie";
+            re = "Selete Search Pls.";//Error Search Movie"
             e.printStackTrace();
 
         }
         return re;        
     }
     
+    /**** เมทอดชื่อ searchQue1
+    * เมื่อมีการเรียกใช้เมทอดนี้จะกระทำฟังก์ชัน searchQue1 เป็นฟังก์ชันที่ส่งค่ากลับเป็น String 
+    * โดยฟังก์ชันนี้รับค่าพารามิเตอร์จากเว็บชื่อ
+    *  ** nodeID ประกาศเป็น Integer ชื่อที่เรียกใช้ในฟังก์ชันเป็น nodeID
+    ****/
     @WebMethod(operationName = "Edit")
     public String EditMovie(@WebParam(name = "nodeID") final int nodeID) throws Exception  {
         String result="Selete NodeID Pls.";
@@ -277,7 +358,7 @@ public class mvWebService {
             // call path xml file to parse document
             URL url = mvWebService.class.getResource("/serverpack/movies.xml");
             String xmlFile = url.getPath();
-            // InputStream xmlFile = mvWebService.class.getResourceAsStream("/serverpack/movies.xml");
+            //InputStream xmlFile = mvWebService.class.getResourceAsStream("/serverpack/movies.xml");
             //File xmlFile = new File("/home/nuyuyii/NetBeansProjects/Pro_ST/MovieWebService/src/java/serverpack/movies.xml");
             result="";
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -286,14 +367,20 @@ public class mvWebService {
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("film");         
 
-            //String result = "";
+            /** ประกาศตัวแปร Element รับค่า Element ที่ตำแหน่ง item NodeID-1 เพราะค่า List เริ่มที่ 0 */
             Element nfilm =  (Element) nList.item(nodeID-1);
+
+            /** วนลูปตามจำนวน ChildNodes ที่มี เพื่อส่งกลับค่ารารละเอียดต่างๆของภาพยนตร์เรื่องนั้น  
+            ** โดยแบ่ง element ในรายการภาพยนตร์ด้วย "--" **/
             NodeList childfilm = nfilm.getChildNodes();
             for (int j= 0; j < childfilm.getLength(); j++){
                 
                 Node temp = childfilm.item(j);
                 NodeList childtemp = temp.getChildNodes();
                 int p = 0;
+            /** เงื่อนไขที่ใช้สำหรับเซ็ค ChildNodes ย่อยในที่นี้คือ <Types> 
+            ** ให้ส่งกลับรายการประเภทหนังของหนังเรื่องนี้ทั้งหมด โดยขั้นรายการประเภทด้วย ","  
+            **/
                 if(childtemp.getLength() > 1){
                     for (int i = 0; i<childtemp.getLength();i++){
                         Node child = childtemp.item(i);
@@ -323,6 +410,16 @@ public class mvWebService {
         return result;
     }
     
+    /**** เมทอดชื่อ Save
+    * เมื่อมีการเรียกใช้เมทอดนี้จะกระทำฟังก์ชัน SaveMovie เป็นฟังก์ชันที่ส่งค่ากลับเป็น String 
+    * โดยฟังก์ชันนี้รับค่าพารามิเตอร์จากเว็บชื่อ
+    *  ** nodeID ประกาศเป็น Integer ชื่อที่เรียกใช้ในฟังก์ชันเป็น nodeID
+    *  ** title ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น title
+    *  ** year ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น year
+    *  ** types ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น types
+    *  ** time ประกาศเป็น Integer ชื่อที่เรียกใช้ในฟังก์ชันเป็น time
+    *  ** director ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น director
+    ****/
     @WebMethod(operationName = "Save")
     public String SaveMovie(@WebParam(name = "nodeID") int nodeID, @WebParam(name = "title") final String _title,
             @WebParam(name = "year") final String _year, @WebParam(name = "types") final String _types, @WebParam(name = "time") final String _time, @WebParam(name = "director") final String _director) throws Exception {
@@ -345,7 +442,10 @@ public class mvWebService {
             NodeList nList = doc.getElementsByTagName("film");         
 
             String re = "";
-            //String mins =_time+"min";
+            /**เริ่มแก้ไขที่ตำแหน่งภาพยนตร์นั้นนับจากรายการ element list film 
+            ** อัพเดทค่าโดยใช้ฟังก์ชัน setNodeValue(value) 
+            ** โดยในที่นี้เราต้องสร้างตัวแปรโหนด เพื่อมารับค่าเดิมของ element ที่ตำแหน่งภาพยนตร์นั้นก่อน
+            **/
             Element nfilm =  (Element) nList.item(nodeID-1);
             Node title = nfilm.getElementsByTagName("title").item(0).getFirstChild();
             title.setNodeValue(_title);
@@ -363,7 +463,7 @@ public class mvWebService {
           
             for (int i= 0; i < typ; i++){ 
                 Node child = (Node) atype.item(0);
-                //print check: result = result+" Del:"+i +" == " + child.getTextContent();
+
                 alltype.removeChild(child);
 
             
@@ -391,9 +491,16 @@ public class mvWebService {
         return result;
     }
 
-    /**
-     * Web service operation
-     */
+    /**** เมทอดชื่อ searchQue2
+    * เมื่อมีการเรียกใช้เมทอดนี้จะกระทำฟังก์ชัน searchQue2 เป็นฟังก์ชันที่ส่งค่ากลับเป็น String 
+    * โดยฟังก์ชันนี้รับค่าพารามิเตอร์จากเว็บชื่อ
+    *  ** category ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น category
+    *  ** conditon ประกาศเป็น String ชื่อที่เรียกใช้ในฟังก์ชันเป็น conditon
+    *  ** firstNum ประกาศเป็น Integer ชื่อที่เรียกใช้ในฟังก์ชันเป็น firstNum
+    *  ** secondNum ประกาศเป็น Integer ชื่อที่เรียกใช้ในฟังก์ชันเป็น secondNum
+    * คล้ายๆ searchQue1 แต่เพิ่มเงื่อนไขด้านจำนวนเลข พวกเวลา มากกว่า น้อยกว่า มาเปรียบเทียบ 
+    * ** ถ้าใช่จึงทำการเก็บค่ารายการภาพยนตร์ที่ตรงเงื่อนไขเป็นสตริง แล้วส่งคืน
+    ****/
     @WebMethod(operationName = "searchQue2")
     public String searchQue2(@WebParam(name = "category") String category,@WebParam(name = "conditon") String conditon, @WebParam(name = "firstNum") int firstNum, @WebParam(name = "secondNum") int secondNum) throws Exception{
         String result="Error Search Condition";
@@ -446,7 +553,8 @@ public class mvWebService {
                         System.out.println(Intval);
                         prt = 1;
                    } 
-                }  
+                }
+                /********ถ้าตรงเงื่อนไข เก็บรายละเอียดของภาพยนตร์ที่ตำแหน่งนั้น เพื่อส่งค่ากลับ *******/
                 if (prt == 1){
                     result = result + "<table><tr><td> NODEID:</td><td> ::" + (temp+1)+"::\n";
                     for (int j= 0; j < childfilm.getLength(); j++){
