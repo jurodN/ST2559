@@ -112,7 +112,6 @@
 <xs:element name="types" type="xs:string" minOccurs="0"/>
 <xs:element name="time" type="xs:int"/>
 <xs:element name="director" type="xs:string" minOccurs="0"/>
-<xs:element name="actor" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

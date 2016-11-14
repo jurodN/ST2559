@@ -3,8 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/nuyuyii/NetBeansProjects/STnew/MovieWebService/web/Updatemovies.xml</file>
-            <file>file:/home/nuyuyii/NetBeansProjects/STnew/MovieWebService/src/java/ReadXML.java</file>
+            <file>file:/C:/Users/NAsiT/Desktop/MovieWebService/src/java/Charsets.java</file>
+            <file>file:/C:/Users/NAsiT/Desktop/MovieWebService/web/index.jsp</file>
+            <file>file:/C:/Users/NAsiT/Desktop/MovieWebService/src/java/serverpack/movies.xml</file>
+            <file>file:/C:/Users/NAsiT/Desktop/MovieWebService/web/movies.dtd</file>
+            <file>file:/C:/Users/NAsiT/Desktop/MovieWebService/src/java/ReadXML.java</file>
+            <file>file:/C:/Users/NAsiT/Desktop/MovieWebService/web/movies.xml</file>
+            <file>file:/C:/Users/NAsiT/Desktop/MovieWebService/src/java/serverpack/UpdatemoviesSr.xml</file>
+            <file>file:/C:/Users/NAsiT/Desktop/MovieWebService/web/xsltMovie.xsl</file>
+            <file>file:/C:/Users/NAsiT/Desktop/MovieWebService/src/java/serverpack/xsltMovie.xsl</file>
         </group>
     </open-files>
 </project-private>

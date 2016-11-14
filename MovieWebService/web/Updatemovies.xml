@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xsl" href="xsltMovie_1.xsl"?><movies>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xsl" href="xsltMovie.xsl"?><movies>
 
     <film>
         <title>Paranormal Activity</title>
@@ -699,69 +699,4 @@
         <director>Joss Whedon</director>
     </film>
 
-<film><title>sfcds</title><year>2016</year><types><type>dscsd</type><type>jdbsa</type><type>fkdbc</type></types><time>102 min</time><director>as</director>
-</film>
-<film>
-    <title>sfcds</title>
-    <year>2016</year>
-    <types>
-        <type>dscsd</type>
-        <type>jdbsa</type>
-        <type>fkdbc</type>
-    </types>
-    <time>102 min</time>
-    <director>as</director>
-</film>
-<film>
-    <title>MisterB</title>
-    <year>2013</year>
-    <types>
-        <type>asdf</type>
-        <type>sedfs</type>
-        <type>sdf</type>
-    </types>
-    <time>100 min</time>
-    <director>jk</director>
-</film>
-<film>
-    <title>MisterB</title>
-    <year>2010</year>
-    <types>
-        <type>Action</type>
-    </types>
-    <time>300 min</time>
-    <director>sssssss</director>
-</film>
-<film>
-    <title>MisterB</title>
-    <year>2013</year>
-    <types>
-        <type>asdf</type>
-        <type>sedfs</type>
-        <type>sdf</type>
-    </types>
-    <time>300 min</time>
-    <director>sssssss</director>
-</film>
-<film>
-    <title>MisterB</title>
-    <year>2010</year>
-    <types>
-        <type>Action</type>
-    </types>
-    <time>100 min</time>
-    <director>jsp</director>
-    <actor>sssssss</actor>
-</film>
-<film>
-    <title>Pete's Dragon </title>
-    <year>2016</year>
-    <types>
-        <type>Animation</type>
-        <type>Adventure</type>
-    </types>
-    <time>102 min</time>
-    <director>David Lowery</director>
-    <actor>Janaii</actor>
-</film>
 </movies>

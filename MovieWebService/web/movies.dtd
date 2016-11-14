@@ -43,6 +43,9 @@
 <!--- Put your DTDDoc comment here. -->
 <!ELEMENT director (#PCDATA)>
 
+<!ELEMENT chapter (#PCDATA)>
+
+<!ELEMENT resolution (#PCDATA)>
 <!--- Put your DTDDoc comment here. -->
 <!ELEMENT type2 (#PCDATA)>
 

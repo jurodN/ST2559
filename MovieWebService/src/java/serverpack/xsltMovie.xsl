@@ -12,6 +12,8 @@
 	<th style="text-align:center" colspan="3">Types</th>
 	<th style="text-align:center" rowspan="2">Time</th>
 	<th style="text-align:center" rowspan="2">Directory</th>
+        <th style="text-align:center" rowspan="2">Chapter</th>
+        <th style="text-align:center" rowspan="2">Resolution</th>
       </tr>
       <tr bgcolor="#EE82EE">
 	  <th style="text-align:center">Type1</th>
@@ -27,6 +29,8 @@
 	<td><xsl:value-of select="types/type[3]"/></td>
 	<td><xsl:value-of select="time"/></td>
 	<td><xsl:value-of select="director"/></td>
+        <td><xsl:value-of select="chapter"/></td>
+        <td><xsl:value-of select="resolution"/></td>
       </tr>
       </xsl:for-each>
    </table>

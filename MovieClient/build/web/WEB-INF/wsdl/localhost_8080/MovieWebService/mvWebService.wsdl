@@ -4,26 +4,14 @@
 <xsd:import namespace="http://serverpack/" schemaLocation="http://localhost:8080/MovieWebService/mvWebService?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="Edit">
-<part name="parameters" element="tns:Edit"/>
-</message>
-<message name="EditResponse">
-<part name="parameters" element="tns:EditResponse"/>
-</message>
-<message name="Exception">
-<part name="fault" element="tns:Exception"/>
-</message>
-<message name="Save">
-<part name="parameters" element="tns:Save"/>
-</message>
-<message name="SaveResponse">
-<part name="parameters" element="tns:SaveResponse"/>
-</message>
 <message name="serchbyID">
 <part name="parameters" element="tns:serchbyID"/>
 </message>
 <message name="serchbyIDResponse">
 <part name="parameters" element="tns:serchbyIDResponse"/>
+</message>
+<message name="Exception">
+<part name="fault" element="tns:Exception"/>
 </message>
 <message name="DeleteMovie">
 <part name="parameters" element="tns:DeleteMovie"/>
@@ -36,6 +24,18 @@
 </message>
 <message name="addMovieResponse">
 <part name="parameters" element="tns:addMovieResponse"/>
+</message>
+<message name="Edit">
+<part name="parameters" element="tns:Edit"/>
+</message>
+<message name="EditResponse">
+<part name="parameters" element="tns:EditResponse"/>
+</message>
+<message name="Save">
+<part name="parameters" element="tns:Save"/>
+</message>
+<message name="SaveResponse">
+<part name="parameters" element="tns:SaveResponse"/>
 </message>
 <message name="searchQue1">
 <part name="parameters" element="tns:searchQue1"/>
@@ -50,16 +50,6 @@
 <part name="parameters" element="tns:searchQue2Response"/>
 </message>
 <portType name="mvWebService">
-<operation name="Edit">
-<input wsam:Action="http://serverpack/mvWebService/EditRequest" message="tns:Edit"/>
-<output wsam:Action="http://serverpack/mvWebService/EditResponse" message="tns:EditResponse"/>
-<fault message="tns:Exception" name="Exception" wsam:Action="http://serverpack/mvWebService/Edit/Fault/Exception"/>
-</operation>
-<operation name="Save">
-<input wsam:Action="http://serverpack/mvWebService/SaveRequest" message="tns:Save"/>
-<output wsam:Action="http://serverpack/mvWebService/SaveResponse" message="tns:SaveResponse"/>
-<fault message="tns:Exception" name="Exception" wsam:Action="http://serverpack/mvWebService/Save/Fault/Exception"/>
-</operation>
 <operation name="serchbyID">
 <input wsam:Action="http://serverpack/mvWebService/serchbyIDRequest" message="tns:serchbyID"/>
 <output wsam:Action="http://serverpack/mvWebService/serchbyIDResponse" message="tns:serchbyIDResponse"/>
@@ -75,6 +65,16 @@
 <output wsam:Action="http://serverpack/mvWebService/addMovieResponse" message="tns:addMovieResponse"/>
 <fault message="tns:Exception" name="Exception" wsam:Action="http://serverpack/mvWebService/addMovie/Fault/Exception"/>
 </operation>
+<operation name="Edit">
+<input wsam:Action="http://serverpack/mvWebService/EditRequest" message="tns:Edit"/>
+<output wsam:Action="http://serverpack/mvWebService/EditResponse" message="tns:EditResponse"/>
+<fault message="tns:Exception" name="Exception" wsam:Action="http://serverpack/mvWebService/Edit/Fault/Exception"/>
+</operation>
+<operation name="Save">
+<input wsam:Action="http://serverpack/mvWebService/SaveRequest" message="tns:Save"/>
+<output wsam:Action="http://serverpack/mvWebService/SaveResponse" message="tns:SaveResponse"/>
+<fault message="tns:Exception" name="Exception" wsam:Action="http://serverpack/mvWebService/Save/Fault/Exception"/>
+</operation>
 <operation name="searchQue1">
 <input wsam:Action="http://serverpack/mvWebService/searchQue1Request" message="tns:searchQue1"/>
 <output wsam:Action="http://serverpack/mvWebService/searchQue1Response" message="tns:searchQue1Response"/>
@@ -88,30 +88,6 @@
 </portType>
 <binding name="mvWebServicePortBinding" type="tns:mvWebService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="Edit">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-<fault name="Exception">
-<soap:fault name="Exception" use="literal"/>
-</fault>
-</operation>
-<operation name="Save">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-<fault name="Exception">
-<soap:fault name="Exception" use="literal"/>
-</fault>
-</operation>
 <operation name="serchbyID">
 <soap:operation soapAction=""/>
 <input>
@@ -137,6 +113,30 @@
 </fault>
 </operation>
 <operation name="addMovie">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
+</fault>
+</operation>
+<operation name="Edit">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+<fault name="Exception">
+<soap:fault name="Exception" use="literal"/>
+</fault>
+</operation>
+<operation name="Save">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

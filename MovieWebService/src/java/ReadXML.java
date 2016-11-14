@@ -52,21 +52,21 @@ public class ReadXML {
         System.out.println(url);
         
         //NodeList nList = doc.getElementsByTagName("film");
-        showNode(nList,60);
+        //showNode(nList,60);
         //deleteElement(nList,"director",60);
         //deleteMovie(nList,60);
         //addMovie(doc, "boxset","$500",59);
         //showNode(nList,59);
         //getMovie(doc, "1", "Paypal", "Payment", "1000");
-        getMovie(doc, "Pete's Dragon ", "2016", "Animation,Adventure", 102, "David Lowery", "Janaii");
+        //getMovie(doc, "Pete's Dragon ", "2016", "Animation,Adventure", 102, "David Lowery");
         //editMoive(doc,"Pete's Dragon ", "201", "Animation,Adventure,d", 102, "David Lowery", 60);
         //showNode(nList,60);
         // Use a Transformer for output
         // URL url = ReadXML.class.getResource("/serverpack/UpdatemoviesSr.xml"); 
         // String path = url.getPath();
         // System.out.println(path);
-        //String pp = searchQue1(doc, "time", "non-between", 2007, 2012);
-        //System.out.println(pp);
+        String pp = searchQue1(doc, "time", "non-between", 2007, 2012);
+        System.out.println(pp);
         TransformerFactory tFactory = TransformerFactory.newInstance();
         Transformer transformer = tFactory.newTransformer();
         DOMSource source = new DOMSource(doc);
@@ -219,7 +219,7 @@ public class ReadXML {
         //System.out.println("Insert OK");
         nfilm.appendChild(newElement);
     }
-    private static void getMovie(Document doc, String title, String year, String types, int time, String director, String actor) {
+    private static void getMovie(Document doc, String title, String year, String types, int time, String director) {
         Element movie = (Element) doc.getDocumentElement();//getElementsByTagName("film");
         Element newfilm = doc.createElement("film");
         //newfilm.setAttribute("id", id);
@@ -229,14 +229,13 @@ public class ReadXML {
         newfilm.appendChild(getMovieElement(doc, "types", ""));
         newfilm.appendChild(getMovieElement(doc, "time", mins));
         newfilm.appendChild(getMovieElement(doc, "director", director));
-        newfilm.appendChild(getMovieElement(doc, "actor",actor));
         Element addtype = (Element) newfilm.getElementsByTagName("types").item(0);
         //Node addtype = 
         int index = 1;
         for (String type: types.split(",")){
-            String name = "type";//+index;
+            String name = "type"+index;
             addtype.appendChild(getMovieElement(doc, name, type));
-            //index++;
+            index++;
             //System.out.println(type);
         }
         // NodeList childfilm = newfilm.getChildNodes();
